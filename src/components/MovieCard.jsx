@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
   Card, CardContent, CardActions,
-  Typography, IconButton, Box, Rating, Chip, CardActionArea, useTheme,
+  Typography, IconButton, Box, Rating, CardActionArea, useTheme, useMediaQuery,
 } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
@@ -14,7 +14,8 @@ const POSTER_FALLBACK = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000
 
 export default function MovieCard({ movie, onRefresh, showSnackbar }) {
   const [modalOpen, setModalOpen] = useState(false)
-  const theme = useTheme()
+  const theme    = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const posterSrc = movie.poster_url && movie.poster_url !== 'N/A'
     ? movie.poster_url
@@ -51,6 +52,95 @@ export default function MovieCard({ movie, onRefresh, showSnackbar }) {
     }
   }
 
+  if (isMobile) {
+    return (
+      <>
+        <Card
+          sx={{
+            opacity: movie.is_watched ? 0.7 : 1,
+            transition: 'opacity 0.3s',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'stretch',
+            position: 'relative',
+          }}
+        >
+          <CardActionArea
+            onClick={() => setModalOpen(true)}
+            sx={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', flexGrow: 1 }}
+          >
+            <Box
+              sx={{
+                width: 72,
+                flexShrink: 0,
+                position: 'relative',
+                overflow: 'hidden',
+                '& img': { transition: 'transform 0.3s ease' },
+                '&:hover img': { transform: 'scale(1.05)' },
+              }}
+            >
+              <Box
+                component="img"
+                src={posterSrc}
+                alt={movie.title}
+                sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            </Box>
+
+            <CardContent sx={{ py: 1.25, px: 1.5, flexGrow: 1, '&:last-child': { pb: 1.25 } }}>
+              <Typography variant="subtitle2" fontWeight={700} sx={{ lineHeight: 1.3, mb: 0.25 }}>
+                {movie.title}
+              </Typography>
+              <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                {movie.year}
+              </Typography>
+              <MovieMeta rated={movie.rated} runtime={movie.runtime} />
+            </CardContent>
+          </CardActionArea>
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              px: 0.5,
+              py: 1,
+              borderLeft: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`,
+            }}
+          >
+            <IconButton
+              size="small"
+              onClick={handleToggleWatched}
+              color={movie.is_watched ? 'success' : 'default'}
+              sx={{ p: 0.5 }}
+            >
+              {movie.is_watched
+                ? <CheckCircleIcon sx={{ fontSize: 18 }} />
+                : <RadioButtonUncheckedIcon sx={{ fontSize: 18 }} />}
+            </IconButton>
+            <Rating
+              size="small"
+              value={movie.personal_rating}
+              onChange={handleRating}
+              max={5}
+              sx={{
+                fontSize: '0.9rem',
+                '& .MuiRating-iconFilled': { color: '#F5C518' },
+              }}
+            />
+            <IconButton size="small" color="error" onClick={handleDelete} sx={{ p: 0.5 }}>
+              <DeleteIcon sx={{ fontSize: 18 }} />
+            </IconButton>
+          </Box>
+        </Card>
+
+        <MovieDetailModal movie={movie} open={modalOpen} onClose={() => setModalOpen(false)} />
+      </>
+    )
+  }
+
+  // Layout desktop — vertical
   return (
     <>
       <Card
