@@ -1,13 +1,25 @@
-# Movie Watchlist — Front-end (React)
+# CineList — Front-end (React)
 
-Interface web desenvolvida em React com Material UI para gerenciar uma lista pessoal de filmes.
+Interface web desenvolvida em React com Material UI para gerenciar uma lista pessoal de filmes. Possui tema dark/light, dashboard com métricas, filtros por status, layout responsivo e skeleton screens.
 
 ## Tecnologias
 
 - **React 18** + **Vite** (bundler)
-- **Material UI v6** (componentes visuais)
+- **Material UI v6** (componentes visuais, tema customizado)
+- **Inter** (tipografia via Google Fonts)
 - **Axios** (chamadas HTTP)
 - **Nginx** (servidor estático no container)
+
+## Funcionalidades
+
+- Busca de filmes via OMDb API
+- Adição, remoção e marcação como assistido
+- Avaliação pessoal com estrelas (1–5)
+- Dashboard com cards de métricas clicáveis (filtro por total / assistidos / pendentes / avaliados)
+- Tema dark/light com toggle no header
+- Layout responsivo: cards verticais no desktop, lista compacta no mobile
+- Skeleton screens durante carregamento
+- Notificações toast para todas as ações
 
 ## Pré-requisitos
 
