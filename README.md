@@ -21,11 +21,26 @@ Interface web desenvolvida em React com Material UI para gerenciar uma lista pes
 - Skeleton screens durante carregamento
 - Notificações toast para todas as ações
 
+## Repositórios
+
+Este projeto é composto por dois repositórios que **devem estar clonados na mesma pasta pai** com os nomes exatos abaixo, pois os `docker-compose.yml` referenciam um ao outro via caminho relativo (`../`):
+
+```
+pasta-qualquer/
+├── mvp-ARQSW-backend/    ← https://github.com/vinibodruch/mvp-ARQSW-backend
+└── mvp-ARQSW-frontend/   ← https://github.com/vinibodruch/mvp-ARQSW-frontend
+```
+
+```bash
+git clone https://github.com/vinibodruch/mvp-ARQSW-backend
+git clone https://github.com/vinibodruch/mvp-ARQSW-frontend
+```
+
 ## Pré-requisitos
 
 - Docker e Docker Compose instalados
 - Chave da [OMDb API](https://www.omdbapi.com/apikey.aspx) (gratuita)
-- Os dois repositórios na mesma pasta pai (`mvp-ARQSW-backend` e `mvp-ARQSW-frontend`)
+- Os dois repositórios clonados conforme a estrutura acima
 
 ## Configuração
 
