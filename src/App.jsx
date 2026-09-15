@@ -57,6 +57,7 @@ export default function App({ toggleMode, mode }) {
               <Typography variant="body2" color="text.secondary">
                 {filter === 'watched' && 'Mostrando: assistidos'}
                 {filter === 'pending' && 'Mostrando: pendentes'}
+                {filter === 'rated'   && 'Mostrando: avaliados'}
                 {!filter && `${movies.length} ${movies.length === 1 ? 'filme' : 'filmes'} na lista`}
               </Typography>
             )}
@@ -67,6 +68,7 @@ export default function App({ toggleMode, mode }) {
           movies={
             filter === 'watched' ? movies.filter((m) => m.is_watched) :
             filter === 'pending' ? movies.filter((m) => !m.is_watched) :
+            filter === 'rated'   ? movies.filter((m) => m.personal_rating > 0) :
             movies
           }
           onRefresh={fetchMovies}
