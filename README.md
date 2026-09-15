@@ -61,6 +61,24 @@ docker compose down -v
 
 Após subir, acesse: **http://localhost:3000**
 
+## Arquitetura
+
+```mermaid
+flowchart LR
+    Browser["Browser\n(React + Nginx)"]
+    Nginx["Nginx\n:3000"]
+    API["Back-end Go\n(Gin + GORM)"]
+    DB[(PostgreSQL)]
+    OMDb["OMDb API\nomdbapi.com"]
+
+    Browser -->|"HTTP /api/*"| Nginx
+    Nginx -->|"proxy_pass"| API
+    API -->|"CRUD"| DB
+    API -->|"GET ?t=título"| OMDb
+```
+
+> O back-end e o banco de dados não expõem portas para o host. O Nginx faz proxy das chamadas `/api/*` para o container do back-end.
+
 ## Estrutura de Serviços
 
 | Serviço | Container | Porta |
@@ -68,5 +86,3 @@ Após subir, acesse: **http://localhost:3000**
 | Front-end (Nginx) | movie_frontend | 3000 |
 | Back-end (Go) | movie_backend | interno |
 | Banco de Dados | movie_db | interno |
-
-> O back-end e o banco de dados não expõem portas para o host. O Nginx faz proxy das chamadas `/api/*` para o container do back-end.
