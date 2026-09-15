@@ -73,7 +73,7 @@ export default function StatsBar({ movies, filter, onFilterChange }) {
   const toggle = (value) => onFilterChange(filter === value ? null : value)
 
   const stats = [
-    { icon: MovieIcon,              label: 'Total',      value: total,     color: '229,9,20',   subtitle: 'na watchlist',   filterKey: null },
+    { icon: MovieIcon,              label: 'Total',      value: total,     color: '229,9,20',   subtitle: 'na watchlist',   filterKey: 'all' },
     { icon: CheckCircleOutlineIcon, label: 'Assistidos', value: watched,   color: '72,199,100', subtitle: `${pct}% concluídos`, filterKey: 'watched' },
     { icon: HourglassBottomIcon,    label: 'Pendentes',  value: pending,   color: '245,197,24', subtitle: 'para assistir',  filterKey: 'pending' },
     { icon: StarIcon,               label: 'Nota média', value: avgRating, color: '99,179,237', subtitle: rated.length > 0 ? `de ${rated.length} avaliados` : 'sem avaliações', filterKey: null },
@@ -86,8 +86,8 @@ export default function StatsBar({ movies, filter, onFilterChange }) {
           <StatCard
             {...s}
             clickable={s.filterKey !== null}
-            active={filter === s.filterKey}
-            onClick={() => toggle(s.filterKey)}
+            active={s.filterKey === 'all' ? filter === null : filter === s.filterKey}
+            onClick={() => s.filterKey === 'all' ? onFilterChange(null) : toggle(s.filterKey)}
           />
         </Grid>
       ))}
