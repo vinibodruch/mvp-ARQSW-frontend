@@ -1,13 +1,25 @@
-# Movie Watchlist — Front-end (React)
+# CineList — Front-end (React)
 
-Interface web desenvolvida em React com Material UI para gerenciar uma lista pessoal de filmes.
+Interface web desenvolvida em React com Material UI para gerenciar uma lista pessoal de filmes. Possui tema dark/light, dashboard com métricas, filtros por status, layout responsivo e skeleton screens.
 
 ## Tecnologias
 
 - **React 18** + **Vite** (bundler)
-- **Material UI v6** (componentes visuais)
+- **Material UI v6** (componentes visuais, tema customizado)
+- **Inter** (tipografia via Google Fonts)
 - **Axios** (chamadas HTTP)
 - **Nginx** (servidor estático no container)
+
+## Funcionalidades
+
+- Busca de filmes via OMDb API
+- Adição, remoção e marcação como assistido
+- Avaliação pessoal com estrelas (1–5)
+- Dashboard com cards de métricas clicáveis (filtro por total / assistidos / pendentes / avaliados)
+- Tema dark/light com toggle no header
+- Layout responsivo: cards verticais no desktop, lista compacta no mobile
+- Skeleton screens durante carregamento
+- Notificações toast para todas as ações
 
 ## Pré-requisitos
 
@@ -49,6 +61,24 @@ docker compose down -v
 
 Após subir, acesse: **http://localhost:3000**
 
+## Arquitetura
+
+```mermaid
+flowchart LR
+    Browser["Browser\n(React + Nginx)"]
+    Nginx["Nginx\n:3000"]
+    API["Back-end Go\n(Gin + GORM)"]
+    DB[(PostgreSQL)]
+    OMDb["OMDb API\nomdbapi.com"]
+
+    Browser -->|"HTTP /api/*"| Nginx
+    Nginx -->|"proxy_pass"| API
+    API -->|"CRUD"| DB
+    API -->|"GET ?t=título"| OMDb
+```
+
+> O back-end e o banco de dados não expõem portas para o host. O Nginx faz proxy das chamadas `/api/*` para o container do back-end.
+
 ## Estrutura de Serviços
 
 | Serviço | Container | Porta |
@@ -56,5 +86,3 @@ Após subir, acesse: **http://localhost:3000**
 | Front-end (Nginx) | movie_frontend | 3000 |
 | Back-end (Go) | movie_backend | interno |
 | Banco de Dados | movie_db | interno |
-
-> O back-end e o banco de dados não expõem portas para o host. O Nginx faz proxy das chamadas `/api/*` para o container do back-end.
