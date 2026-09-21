@@ -81,13 +81,11 @@ Após subir, acesse: **http://localhost:3000**
 ```mermaid
 flowchart LR
     Browser["Browser\n(React + Nginx)"]
-    Nginx["Nginx\n:3000"]
     API["Back-end Go\n(Gin + GORM)"]
     DB[(PostgreSQL)]
     OMDb["OMDb API\nomdbapi.com"]
 
-    Browser -->|"HTTP /api/*"| Nginx
-    Nginx -->|"proxy_pass"| API
+    Browser -->|"HTTP /api/* (nginx proxy_pass)"| API
     API -->|"CRUD"| DB
     API -->|"GET ?t=título"| OMDb
 ```
