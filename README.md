@@ -2,6 +2,24 @@
 
 Interface web desenvolvida em React com Material UI para gerenciar uma lista pessoal de filmes. Possui tema dark/light, dashboard com métricas, filtros por status, layout responsivo e skeleton screens.
 
+## Início Rápido
+
+Sem precisar compilar nada — o Docker Compose puxa as imagens prontas do DockerHub:
+
+```bash
+# Clone os dois repositórios na mesma pasta pai
+git clone https://github.com/vinibodruch/mvp-ARQSW-backend
+git clone https://github.com/vinibodruch/mvp-ARQSW-frontend
+
+# Entre na pasta do frontend e suba o stack completo
+cd mvp-ARQSW-frontend
+docker compose up -d
+```
+
+Acesse **http://localhost:3000**. Pronto.
+
+> `docker compose up` (sem `--build`) usa as imagens `bodruch/movie-frontend:1.0.0` e `bodruch/movie-backend:1.0.0` do DockerHub. Use `--build` apenas se quiser recompilar a partir do código-fonte local.
+
 ## Tecnologias
 
 - **React 18** + **Vite** (bundler)
